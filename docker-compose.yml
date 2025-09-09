@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    volumes:
+      - ./:/var/www/html
+    environment:
+      DB_DSN: "mysql:host=mysql;port=3306;dbname=userapi;charset=utf8mb4"
+      DB_USER: userapi
+      DB_PASS: userapi_password
+    ports:
+      - "9000:9000"
+    depends_on:
+      - mysql
+    command: ["php-fpm"]  
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: userapi
+      MYSQL_USER: userapi
+      MYSQL_PASSWORD: userapi_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  web:            
+    image: nginx:latest
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "8080:80"
+    depends_on:
+      - app
+
+volumes:
+  mysql-data:

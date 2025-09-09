@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: caseestuda-mysql
+spec:
+  selector:
+    app: caseestuda-mysql
+  ports:
+  - port: 3306
+    targetPort: 3306
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: caseestuda-app
+spec:
+  selector:
+    app: caseestuda-app
+  ports:
+  - port: 80
+    targetPort: 80
+  type: NodePort

@@ -1,0 +1,1 @@
+{"version":1,"defects":{"UserTest::testAddAndListUser":4,"UserTest::testFindByEmail":4},"times":{"UserTest::testAddAndListUser":0.053,"UserTest::testFindByEmail":0.053}}

@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: caseestuda-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: caseestuda-app
+  template:
+    metadata:
+      labels:
+        app: caseestuda-app
+    spec:
+      containers:
+      - name: php-fpm
+        image: caseestuda_app:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 9000
+        env:
+        - name: DB_DSN
+          value: "mysql:host=caseestuda-mysql;port=3306;dbname=userapi;charset=utf8mb4"
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: username
+        - name: DB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: password
+
+      - name: nginx
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: nginx-config
+          mountPath: /etc/nginx/conf.d
+        - name: app-code
+          mountPath: /var/www/html
+
+      volumes:
+      - name: nginx-config
+        configMap:
+          name: nginx-config
+      - name: app-code
+        emptyDir: {}
