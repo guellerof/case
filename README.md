@@ -25,9 +25,7 @@ case.estuda/
 ## Rodar Localmente (Docker Compose)
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seuusuario/case.estuda.git
-   cd case.estuda
-   ```
+
 2. Suba a aplicação com Docker Compose:
    ```bash
    docker-compose up -d
@@ -54,11 +52,11 @@ case.estuda/
 1. Configure suas credenciais de nuvem (AWS, GCP, Azure ou OCI).  
 2. Ajuste o `variables.tf` com sua região e parâmetros.  
 3. Execute:
-   ```bash
+ 
    cd terraform
    terraform init
    terraform apply
-   ```
+
 
 Isso criará:  
  Uma VM para rodar a aplicação  
@@ -76,17 +74,17 @@ Pipeline definido em `.github/workflows/ci-cd.yml`:
 
 ## Kubernetes (Minikube)
 1. Inicie o Minikube:
-   ```bash
+
    minikube start
-   ```
+ 
 2. Aplique os manifests:
-   ```bash
+   
    kubectl apply -f k8s/
-   ```
+
 3. Exponha a aplicação:
-   ```bash
+ 
    minikube service case.estuda-service
-   ```
+ 
 
 ---
 
@@ -106,8 +104,8 @@ Pipeline definido em `.github/workflows/ci-cd.yml`:
 
 ##  Testes Unitários
 Rodar os testes:
-```bash
+
 docker exec -it case.estuda-app vendor/bin/phpunit tests
-```
+
 
 
